@@ -9,7 +9,6 @@
 			"playwright-report",
 			"tsconfig.app.json",
 			"src/client"
-			
 		]
 	},
 	"formatter": {
