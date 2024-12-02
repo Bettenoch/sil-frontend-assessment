@@ -7,7 +7,9 @@
 			"src/routeTree.gen.ts",
 			"playwright.config.ts",
 			"playwright-report",
-			"tsconfig.app.json"
+			"tsconfig.app.json",
+			"src/client"
+			
 		]
 	},
 	"formatter": {
