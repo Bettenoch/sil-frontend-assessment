@@ -1,13 +1,13 @@
 {
 	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-	"vcs": {
-		"enabled": false,
-		"clientKind": "git",
-		"useIgnoreFile": false
-	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": []
+		"ignore": [
+			"node_modules",
+			"src/routeTree.gen.ts",
+			"playwright.config.ts",
+			"playwright-report"
+		]
 	},
 	"formatter": {
 		"enabled": true,
@@ -19,12 +19,20 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"suspicious": {
+        		"noExplicitAny": "off",
+        		"noArrayIndexKey": "off"
+      		},
+      		"style": {
+        		"noNonNullAssertion": "off"
+      		}
 		}
 	},
 	"javascript": {
 		"formatter": {
-			"quoteStyle": "double"
+			"quoteStyle": "double",
+			 "semicolons": "asNeeded"
 		}
 	}
 }
