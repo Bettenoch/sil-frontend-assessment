@@ -1,0 +1,10 @@
+repos:
+  - repo: https://github.com/biome-js/pre-commit
+    rev: v1.0.0
+    hooks:
+      - id: biome
+        args: ["."]
+
+ci:
+  autofix_commit_msg: 🎨 [pre-commit.ci] Auto format from pre-commit.com hooks
+  autoupdate_commit_msg: ⬆ [pre-commit.ci] pre-commit autoupdate
