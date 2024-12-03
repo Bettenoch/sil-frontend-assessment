@@ -10,11 +10,9 @@ export const Route = createFileRoute("/_layout")({
 function Layout() {
 	return (
 		<Flex maxW="large" direction={"column"} h="auto" position="relative">
-			<Navbar/>
-			
+			<Navbar />
+
 			<Outlet />
-			
-			
 		</Flex>
 	)
 }

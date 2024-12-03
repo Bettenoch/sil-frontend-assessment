@@ -9,7 +9,6 @@ export const Route = createFileRoute("/_layout/")({
 function Home() {
 	return (
 		<>
-
 			<Container maxW="full">
 				<Box pt={12} m={4}>
 					<Text fontSize="2xl">Hi, there welcome to SIL STUDIO 👋🏼</Text>
