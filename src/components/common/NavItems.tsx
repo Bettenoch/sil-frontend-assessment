@@ -5,7 +5,7 @@ import { useColorModeValue } from "../ui/color-mode"
 
 const navlist = [
 	{ icon: LuHome, title: "Home", path: "/" },
-	{ icon: LuDatabase, title: "Dashboard", path: "/users"},
+	{ icon: LuDatabase, title: "Dashboard", path: "/users" },
 	{ icon: LuAlbum, title: "Albums", path: "/albums" },
 	{ icon: LuCamera, title: "Photos", path: "/photos" },
 ]
@@ -19,8 +19,8 @@ const NavItems = () => {
 			w={"full"}
 			key={title}
 			_hover={{
-				base: { bg: hoverBg, color: textHover }, 
-				md: { borderBottom: "2px solid", bg: "none", color: textHover }, 
+				base: { bg: hoverBg, color: textHover },
+				md: { borderBottom: "2px solid", bg: "none", color: textHover },
 			}}
 		>
 			<Link
