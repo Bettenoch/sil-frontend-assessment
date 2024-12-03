@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Box, Container, Input, Stack, Text, VStack } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import userAuth, { isLoggedIn } from "../auth/user_auth";
