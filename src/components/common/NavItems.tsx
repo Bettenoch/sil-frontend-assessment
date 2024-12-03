@@ -52,7 +52,7 @@ const NavItems = () => {
 			listStyle={"none"}
 			alignItems={"center"}
 			justifyContent={"center"}
-			gap={{ base: 8, md: 8 }}
+			gap={{ base: 2, md: 6 }}
 			flexDir={{ base: "column", md: "row" }}
 		>
 			{navItems}
