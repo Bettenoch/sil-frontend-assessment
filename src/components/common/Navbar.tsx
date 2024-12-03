@@ -111,11 +111,13 @@ const Navbar = () => {
 				</Flex>
 			</Flex>
 			<Box
+				w={"100%"}
+				zIndex={"50"}
 				bg={bgColor}
 				color={textColor}
 				display={{ base: "none", md: "flex" }}
 				top={0}
-				position={"sticky"}
+				position={"fixed"}
 			>
 				<Flex w="100%" p={4} justify={"space-between"}>
 					<Box>

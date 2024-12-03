@@ -15,6 +15,8 @@ import { Route as SignupImport } from './routes/signup'
 import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
+import { Route as LayoutAlbumsImport } from './routes/_layout/albums'
+import { Route as LayoutUsersIndexImport } from './routes/_layout/users/index'
 
 // Create/Update Routes
 
@@ -38,6 +40,18 @@ const LayoutRoute = LayoutImport.update({
 const LayoutIndexRoute = LayoutIndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutAlbumsRoute = LayoutAlbumsImport.update({
+  id: '/albums',
+  path: '/albums',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutUsersIndexRoute = LayoutUsersIndexImport.update({
+  id: '/users/',
+  path: '/users/',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -66,11 +80,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
     }
+    '/_layout/albums': {
+      id: '/_layout/albums'
+      path: '/albums'
+      fullPath: '/albums'
+      preLoaderRoute: typeof LayoutAlbumsImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/': {
       id: '/_layout/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/users/': {
+      id: '/_layout/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof LayoutUsersIndexImport
       parentRoute: typeof LayoutImport
     }
   }
@@ -79,11 +107,15 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface LayoutRouteChildren {
+  LayoutAlbumsRoute: typeof LayoutAlbumsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutUsersIndexRoute: typeof LayoutUsersIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutAlbumsRoute: LayoutAlbumsRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutUsersIndexRoute: LayoutUsersIndexRoute,
 }
 
 const LayoutRouteWithChildren =
@@ -93,13 +125,17 @@ export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/albums': typeof LayoutAlbumsRoute
   '/': typeof LayoutIndexRoute
+  '/users': typeof LayoutUsersIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/albums': typeof LayoutAlbumsRoute
   '/': typeof LayoutIndexRoute
+  '/users': typeof LayoutUsersIndexRoute
 }
 
 export interface FileRoutesById {
@@ -107,15 +143,24 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/_layout/albums': typeof LayoutAlbumsRoute
   '/_layout/': typeof LayoutIndexRoute
+  '/_layout/users/': typeof LayoutUsersIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/login' | '/signup' | '/'
+  fullPaths: '' | '/login' | '/signup' | '/albums' | '/' | '/users'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/signup' | '/'
-  id: '__root__' | '/_layout' | '/login' | '/signup' | '/_layout/'
+  to: '/login' | '/signup' | '/albums' | '/' | '/users'
+  id:
+    | '__root__'
+    | '/_layout'
+    | '/login'
+    | '/signup'
+    | '/_layout/albums'
+    | '/_layout/'
+    | '/_layout/users/'
   fileRoutesById: FileRoutesById
 }
 
@@ -149,7 +194,9 @@ export const routeTree = rootRoute
     "/_layout": {
       "filePath": "_layout.tsx",
       "children": [
-        "/_layout/"
+        "/_layout/albums",
+        "/_layout/",
+        "/_layout/users/"
       ]
     },
     "/login": {
@@ -158,8 +205,16 @@ export const routeTree = rootRoute
     "/signup": {
       "filePath": "signup.tsx"
     },
+    "/_layout/albums": {
+      "filePath": "_layout/albums.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/users/": {
+      "filePath": "_layout/users/index.tsx",
       "parent": "/_layout"
     }
   }
