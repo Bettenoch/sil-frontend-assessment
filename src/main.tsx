@@ -6,8 +6,13 @@ import { createRoot } from "react-dom/client"
 import "./index.css"
 import { routeTree } from "./routeTree.gen"
 
+import { OpenAPI } from "./client/index.ts"
 import { Provider } from "./components/ui/provider.tsx"
 
+OpenAPI.BASE = "http://localhost:8000"
+OpenAPI.TOKEN = async () => {
+	return localStorage.getItem("access_token") || ""
+}
 const queryClient = new QueryClient()
 const router = createRouter({ routeTree })
 declare module "@tanstack/react-router" {

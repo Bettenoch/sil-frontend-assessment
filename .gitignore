@@ -27,3 +27,4 @@ modify-openapi-operationids.js
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+.env
