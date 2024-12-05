@@ -16,6 +16,8 @@ import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutUsersIndexImport } from './routes/_layout/users/index'
+import { Route as LayoutPhotosIndexImport } from './routes/_layout/photos/index'
+import { Route as LayoutAlbumsIndexImport } from './routes/_layout/albums/index'
 import { Route as LayoutUsersUserIdAlbumsIndexImport } from './routes/_layout/users/$userId/albums/index'
 import { Route as LayoutUsersUserIdAlbumsAlbumIdIndexImport } from './routes/_layout/users/$userId/albums/$albumId/index'
 import { Route as LayoutUsersUserIdAlbumsAlbumIdPhotosIndexImport } from './routes/_layout/users/$userId/albums/$albumId/photos/index'
@@ -49,6 +51,18 @@ const LayoutIndexRoute = LayoutIndexImport.update({
 const LayoutUsersIndexRoute = LayoutUsersIndexImport.update({
   id: '/users/',
   path: '/users/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutPhotosIndexRoute = LayoutPhotosIndexImport.update({
+  id: '/photos/',
+  path: '/photos/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutAlbumsIndexRoute = LayoutAlbumsIndexImport.update({
+  id: '/albums/',
+  path: '/albums/',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -112,6 +126,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/albums/': {
+      id: '/_layout/albums/'
+      path: '/albums'
+      fullPath: '/albums'
+      preLoaderRoute: typeof LayoutAlbumsIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/photos/': {
+      id: '/_layout/photos/'
+      path: '/photos'
+      fullPath: '/photos'
+      preLoaderRoute: typeof LayoutPhotosIndexImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/users/': {
       id: '/_layout/users/'
       path: '/users'
@@ -154,6 +182,8 @@ declare module '@tanstack/react-router' {
 
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutAlbumsIndexRoute: typeof LayoutAlbumsIndexRoute
+  LayoutPhotosIndexRoute: typeof LayoutPhotosIndexRoute
   LayoutUsersIndexRoute: typeof LayoutUsersIndexRoute
   LayoutUsersUserIdAlbumsIndexRoute: typeof LayoutUsersUserIdAlbumsIndexRoute
   LayoutUsersUserIdAlbumsAlbumIdIndexRoute: typeof LayoutUsersUserIdAlbumsAlbumIdIndexRoute
@@ -163,6 +193,8 @@ interface LayoutRouteChildren {
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutAlbumsIndexRoute: LayoutAlbumsIndexRoute,
+  LayoutPhotosIndexRoute: LayoutPhotosIndexRoute,
   LayoutUsersIndexRoute: LayoutUsersIndexRoute,
   LayoutUsersUserIdAlbumsIndexRoute: LayoutUsersUserIdAlbumsIndexRoute,
   LayoutUsersUserIdAlbumsAlbumIdIndexRoute:
@@ -181,6 +213,8 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/': typeof LayoutIndexRoute
+  '/albums': typeof LayoutAlbumsIndexRoute
+  '/photos': typeof LayoutPhotosIndexRoute
   '/users': typeof LayoutUsersIndexRoute
   '/users/$userId/albums': typeof LayoutUsersUserIdAlbumsIndexRoute
   '/users/$userId/albums/$albumId': typeof LayoutUsersUserIdAlbumsAlbumIdIndexRoute
@@ -192,6 +226,8 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/': typeof LayoutIndexRoute
+  '/albums': typeof LayoutAlbumsIndexRoute
+  '/photos': typeof LayoutPhotosIndexRoute
   '/users': typeof LayoutUsersIndexRoute
   '/users/$userId/albums': typeof LayoutUsersUserIdAlbumsIndexRoute
   '/users/$userId/albums/$albumId': typeof LayoutUsersUserIdAlbumsAlbumIdIndexRoute
@@ -205,6 +241,8 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/_layout/': typeof LayoutIndexRoute
+  '/_layout/albums/': typeof LayoutAlbumsIndexRoute
+  '/_layout/photos/': typeof LayoutPhotosIndexRoute
   '/_layout/users/': typeof LayoutUsersIndexRoute
   '/_layout/users/$userId/albums/': typeof LayoutUsersUserIdAlbumsIndexRoute
   '/_layout/users/$userId/albums/$albumId/': typeof LayoutUsersUserIdAlbumsAlbumIdIndexRoute
@@ -219,6 +257,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/'
+    | '/albums'
+    | '/photos'
     | '/users'
     | '/users/$userId/albums'
     | '/users/$userId/albums/$albumId'
@@ -229,6 +269,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/'
+    | '/albums'
+    | '/photos'
     | '/users'
     | '/users/$userId/albums'
     | '/users/$userId/albums/$albumId'
@@ -240,6 +282,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/_layout/'
+    | '/_layout/albums/'
+    | '/_layout/photos/'
     | '/_layout/users/'
     | '/_layout/users/$userId/albums/'
     | '/_layout/users/$userId/albums/$albumId/'
@@ -279,6 +323,8 @@ export const routeTree = rootRoute
       "filePath": "_layout.tsx",
       "children": [
         "/_layout/",
+        "/_layout/albums/",
+        "/_layout/photos/",
         "/_layout/users/",
         "/_layout/users/$userId/albums/",
         "/_layout/users/$userId/albums/$albumId/",
@@ -294,6 +340,14 @@ export const routeTree = rootRoute
     },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/albums/": {
+      "filePath": "_layout/albums/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/photos/": {
+      "filePath": "_layout/photos/index.tsx",
       "parent": "/_layout"
     },
     "/_layout/users/": {
