@@ -16,6 +16,7 @@ import { getUserById } from "../../.."
 import { AllAlbumPhotosService } from "../../../../../../../../client"
 import { formatDate } from "../../../../../../../../utils"
 import EditPhoto from '../../../../../../../../components/photos/EditPhoto'
+import { BreadcrumbCurrentLink, BreadcrumbLink, BreadcrumbRoot } from "../../../../../../../../components/ui/breadcrumb"
 
 export const Route = createFileRoute(
 	"/_layout/users/$userId/albums/$albumId/photos/$photoId/",
@@ -60,11 +61,21 @@ function PhotoPage() {
 	const { data: album } = useQuery(getAlbumDetail({ albumId }))
 
 	const {user} = userAuth()
-
+	const userTitle = user?.username || "user";
+	const albumTitle = album?.title || "album";
+	const photoTitle = photo?.photo_title || "photo_title";
 	const canManagePhoto = user?.is_superuser || album?.owner_id === user?.id
 	return 	(
 		<Container maxW={"full"}>
 			<Flex w="100%" direction={"column"} mt={24} gap={8}>
+			<Box>
+          <BreadcrumbRoot>
+            <BreadcrumbLink href="/users">Dashboard</BreadcrumbLink>
+            <BreadcrumbLink href={`/users/${userId}/albums?page=1`}>{userTitle}</BreadcrumbLink>
+			<BreadcrumbLink href={`/users/${userId}/albums/${albumId}/photos?page=1`}>{albumTitle}</BreadcrumbLink>
+            <BreadcrumbCurrentLink>{photoTitle}</BreadcrumbCurrentLink>
+          </BreadcrumbRoot>
+        </Box>
 				<Flex
 					w="full"
 					direction={{ base: "column-reverse", md: "row" }}
