@@ -1,5 +1,4 @@
 import { Flex } from "@chakra-ui/react"
-import React from "react"
 import { Button } from "../../components/ui/button"
 
 type PaginationFooterProps = {
@@ -17,9 +16,12 @@ export function CustomFooter({
 }: PaginationFooterProps) {
 	return (
 		<Flex
+			position={"absolute"}
+			bottom={0}
+			w="full"
 			gap={4}
 			alignItems="center"
-			mt={4}
+			mt={8}
 			direction="row"
 			justifyContent="flex-end"
 		>

@@ -10,8 +10,9 @@ import {
 	Text,
 } from "@chakra-ui/react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router"
 import { z } from "zod"
+import { Route as UserAlbums } from "./$userId/albums/index"
 
 import { useEffect } from "react"
 import userAuth from "../../../auth/user_auth"
@@ -73,10 +74,13 @@ function ActiveUsers() {
 	return (
 		<Container maxW={"100%"}>
 			<Flex
+				mt={24}
 				p={6}
 				direction={"column"}
+				minH={"100vh"}
 				alignItems={"center"}
 				justifyContent={"center"}
+				position={"relative"}
 				gap={6}
 			>
 				<Box
@@ -90,6 +94,7 @@ function ActiveUsers() {
 					</Heading>
 				</Box>
 				<Grid
+					mb={8}
 					w="full"
 					placeItems={"center"}
 					templateColumns={{
@@ -118,41 +123,43 @@ function ActiveUsers() {
 									key={user.id}
 									opacity={isPlaceholderData ? 0.5 : 1}
 								>
-									<Box
-										display={"flex"}
-										flexDirection={"column"}
-										alignItems={"center"}
-										justifyContent={"center"}
-									>
-										<Image
-											src={user.avatar || ""}
-											alt={user.username}
-											w={16}
-											h={16}
-											rounded={"full"}
-										/>
-
+									<Link to={UserAlbums.fullPath} params={{ userId: user.id }}>
 										<Box
-											w="full"
 											display={"flex"}
 											flexDirection={"column"}
 											alignItems={"center"}
 											justifyContent={"center"}
 										>
-											<Flex gap={"2"} position={"relative"}>
-												{user.id === currentUser?.id && (
-													<Box bg={"cyan.500"} borderRadius={"1em"}>
-														<Text fontWeight={"light"} px={2}>
-															You
-														</Text>
-													</Box>
-												)}
-												<Text>{user.username}</Text>
-												{}
-											</Flex>
-											<Text>Joined:</Text>
+											<Image
+												src={user.avatar || ""}
+												alt={user.username}
+												w={16}
+												h={16}
+												rounded={"full"}
+											/>
+
+											<Box
+												w="full"
+												display={"flex"}
+												flexDirection={"column"}
+												alignItems={"center"}
+												justifyContent={"center"}
+											>
+												<Flex gap={"2"} position={"relative"}>
+													{user.id === currentUser?.id && (
+														<Box bg={"cyan.500"} borderRadius={"1em"}>
+															<Text fontWeight={"light"} px={2}>
+																You
+															</Text>
+														</Box>
+													)}
+													<Text>{user.username}</Text>
+													{}
+												</Flex>
+												<Text>Joined:</Text>
+											</Box>
 										</Box>
-									</Box>
+									</Link>
 								</GridItem>
 							))}
 						</>
