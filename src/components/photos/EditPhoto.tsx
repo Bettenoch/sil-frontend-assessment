@@ -89,7 +89,7 @@ const EditPhoto = ({userId,albumId,photoId, photo }: EditPhotoProps) => {
     <>
       <DialogRoot lazyMount open={open} onOpenChange={(e) => setOpen(e.open)}>
         <DialogTrigger asChild>
-          <Button variant="outline">Edit Post</Button>
+          <Button variant="outline">Edit Photo</Button>
         </DialogTrigger>
 
         <DialogContent  as="form" onSubmit={handleSubmit(onSubmit)}>
