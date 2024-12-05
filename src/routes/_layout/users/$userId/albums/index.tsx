@@ -15,9 +15,9 @@ import { useEffect } from "react"
 import { LuArrowBigLeft } from "react-icons/lu"
 import { z } from "zod"
 import { UserAlbumsService, UsersService } from "../../../../../client"
+import Breadcrumb from "../../../../../components/common/Breadcrumb"
 import { CustomFooter } from "../../../../../components/common/CustomFooter"
 import { Route as AlbumPhotos } from "./$albumId/photos/"
-import Breadcrumb from "../../../../../components/common/Breadcrumb"
 const albumSearchSchema = z.object({
 	page: z.number().catch(1),
 })
@@ -54,10 +54,7 @@ function UserAlbum() {
 	const { page } = Route.useSearch()
 	const queryClient = useQueryClient()
 
-	
-	const breadcrumbItems = [
-		{ label: "dasboard", href: "/users" }, 
-	  ];
+	const breadcrumbItems = [{ label: "dasboard", href: "/users" }]
 	const setPage = (page: number) =>
 		navigate({
 			search: (prev: { [key: string]: string }) => ({ ...prev, page }),
