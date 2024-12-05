@@ -17,6 +17,9 @@ import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutUsersIndexImport } from './routes/_layout/users/index'
 import { Route as LayoutUsersUserIdAlbumsIndexImport } from './routes/_layout/users/$userId/albums/index'
+import { Route as LayoutUsersUserIdAlbumsAlbumIdIndexImport } from './routes/_layout/users/$userId/albums/$albumId/index'
+import { Route as LayoutUsersUserIdAlbumsAlbumIdPhotosIndexImport } from './routes/_layout/users/$userId/albums/$albumId/photos/index'
+import { Route as LayoutUsersUserIdAlbumsAlbumIdPhotosPhotoIdIndexImport } from './routes/_layout/users/$userId/albums/$albumId/photos/$photoId/index'
 
 // Create/Update Routes
 
@@ -53,6 +56,27 @@ const LayoutUsersUserIdAlbumsIndexRoute =
   LayoutUsersUserIdAlbumsIndexImport.update({
     id: '/users/$userId/albums/',
     path: '/users/$userId/albums/',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutUsersUserIdAlbumsAlbumIdIndexRoute =
+  LayoutUsersUserIdAlbumsAlbumIdIndexImport.update({
+    id: '/users/$userId/albums/$albumId/',
+    path: '/users/$userId/albums/$albumId/',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutUsersUserIdAlbumsAlbumIdPhotosIndexRoute =
+  LayoutUsersUserIdAlbumsAlbumIdPhotosIndexImport.update({
+    id: '/users/$userId/albums/$albumId/photos/',
+    path: '/users/$userId/albums/$albumId/photos/',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutUsersUserIdAlbumsAlbumIdPhotosPhotoIdIndexRoute =
+  LayoutUsersUserIdAlbumsAlbumIdPhotosPhotoIdIndexImport.update({
+    id: '/users/$userId/albums/$albumId/photos/$photoId/',
+    path: '/users/$userId/albums/$albumId/photos/$photoId/',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -102,6 +126,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutUsersUserIdAlbumsIndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/users/$userId/albums/$albumId/': {
+      id: '/_layout/users/$userId/albums/$albumId/'
+      path: '/users/$userId/albums/$albumId'
+      fullPath: '/users/$userId/albums/$albumId'
+      preLoaderRoute: typeof LayoutUsersUserIdAlbumsAlbumIdIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/users/$userId/albums/$albumId/photos/': {
+      id: '/_layout/users/$userId/albums/$albumId/photos/'
+      path: '/users/$userId/albums/$albumId/photos'
+      fullPath: '/users/$userId/albums/$albumId/photos'
+      preLoaderRoute: typeof LayoutUsersUserIdAlbumsAlbumIdPhotosIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/users/$userId/albums/$albumId/photos/$photoId/': {
+      id: '/_layout/users/$userId/albums/$albumId/photos/$photoId/'
+      path: '/users/$userId/albums/$albumId/photos/$photoId'
+      fullPath: '/users/$userId/albums/$albumId/photos/$photoId'
+      preLoaderRoute: typeof LayoutUsersUserIdAlbumsAlbumIdPhotosPhotoIdIndexImport
+      parentRoute: typeof LayoutImport
+    }
   }
 }
 
@@ -111,12 +156,21 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutUsersIndexRoute: typeof LayoutUsersIndexRoute
   LayoutUsersUserIdAlbumsIndexRoute: typeof LayoutUsersUserIdAlbumsIndexRoute
+  LayoutUsersUserIdAlbumsAlbumIdIndexRoute: typeof LayoutUsersUserIdAlbumsAlbumIdIndexRoute
+  LayoutUsersUserIdAlbumsAlbumIdPhotosIndexRoute: typeof LayoutUsersUserIdAlbumsAlbumIdPhotosIndexRoute
+  LayoutUsersUserIdAlbumsAlbumIdPhotosPhotoIdIndexRoute: typeof LayoutUsersUserIdAlbumsAlbumIdPhotosPhotoIdIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutUsersIndexRoute: LayoutUsersIndexRoute,
   LayoutUsersUserIdAlbumsIndexRoute: LayoutUsersUserIdAlbumsIndexRoute,
+  LayoutUsersUserIdAlbumsAlbumIdIndexRoute:
+    LayoutUsersUserIdAlbumsAlbumIdIndexRoute,
+  LayoutUsersUserIdAlbumsAlbumIdPhotosIndexRoute:
+    LayoutUsersUserIdAlbumsAlbumIdPhotosIndexRoute,
+  LayoutUsersUserIdAlbumsAlbumIdPhotosPhotoIdIndexRoute:
+    LayoutUsersUserIdAlbumsAlbumIdPhotosPhotoIdIndexRoute,
 }
 
 const LayoutRouteWithChildren =
@@ -129,6 +183,9 @@ export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/users': typeof LayoutUsersIndexRoute
   '/users/$userId/albums': typeof LayoutUsersUserIdAlbumsIndexRoute
+  '/users/$userId/albums/$albumId': typeof LayoutUsersUserIdAlbumsAlbumIdIndexRoute
+  '/users/$userId/albums/$albumId/photos': typeof LayoutUsersUserIdAlbumsAlbumIdPhotosIndexRoute
+  '/users/$userId/albums/$albumId/photos/$photoId': typeof LayoutUsersUserIdAlbumsAlbumIdPhotosPhotoIdIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -137,6 +194,9 @@ export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
   '/users': typeof LayoutUsersIndexRoute
   '/users/$userId/albums': typeof LayoutUsersUserIdAlbumsIndexRoute
+  '/users/$userId/albums/$albumId': typeof LayoutUsersUserIdAlbumsAlbumIdIndexRoute
+  '/users/$userId/albums/$albumId/photos': typeof LayoutUsersUserIdAlbumsAlbumIdPhotosIndexRoute
+  '/users/$userId/albums/$albumId/photos/$photoId': typeof LayoutUsersUserIdAlbumsAlbumIdPhotosPhotoIdIndexRoute
 }
 
 export interface FileRoutesById {
@@ -147,6 +207,9 @@ export interface FileRoutesById {
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/users/': typeof LayoutUsersIndexRoute
   '/_layout/users/$userId/albums/': typeof LayoutUsersUserIdAlbumsIndexRoute
+  '/_layout/users/$userId/albums/$albumId/': typeof LayoutUsersUserIdAlbumsAlbumIdIndexRoute
+  '/_layout/users/$userId/albums/$albumId/photos/': typeof LayoutUsersUserIdAlbumsAlbumIdPhotosIndexRoute
+  '/_layout/users/$userId/albums/$albumId/photos/$photoId/': typeof LayoutUsersUserIdAlbumsAlbumIdPhotosPhotoIdIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -158,8 +221,19 @@ export interface FileRouteTypes {
     | '/'
     | '/users'
     | '/users/$userId/albums'
+    | '/users/$userId/albums/$albumId'
+    | '/users/$userId/albums/$albumId/photos'
+    | '/users/$userId/albums/$albumId/photos/$photoId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/signup' | '/' | '/users' | '/users/$userId/albums'
+  to:
+    | '/login'
+    | '/signup'
+    | '/'
+    | '/users'
+    | '/users/$userId/albums'
+    | '/users/$userId/albums/$albumId'
+    | '/users/$userId/albums/$albumId/photos'
+    | '/users/$userId/albums/$albumId/photos/$photoId'
   id:
     | '__root__'
     | '/_layout'
@@ -168,6 +242,9 @@ export interface FileRouteTypes {
     | '/_layout/'
     | '/_layout/users/'
     | '/_layout/users/$userId/albums/'
+    | '/_layout/users/$userId/albums/$albumId/'
+    | '/_layout/users/$userId/albums/$albumId/photos/'
+    | '/_layout/users/$userId/albums/$albumId/photos/$photoId/'
   fileRoutesById: FileRoutesById
 }
 
@@ -203,7 +280,10 @@ export const routeTree = rootRoute
       "children": [
         "/_layout/",
         "/_layout/users/",
-        "/_layout/users/$userId/albums/"
+        "/_layout/users/$userId/albums/",
+        "/_layout/users/$userId/albums/$albumId/",
+        "/_layout/users/$userId/albums/$albumId/photos/",
+        "/_layout/users/$userId/albums/$albumId/photos/$photoId/"
       ]
     },
     "/login": {
@@ -222,6 +302,18 @@ export const routeTree = rootRoute
     },
     "/_layout/users/$userId/albums/": {
       "filePath": "_layout/users/$userId/albums/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/users/$userId/albums/$albumId/": {
+      "filePath": "_layout/users/$userId/albums/$albumId/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/users/$userId/albums/$albumId/photos/": {
+      "filePath": "_layout/users/$userId/albums/$albumId/photos/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/users/$userId/albums/$albumId/photos/$photoId/": {
+      "filePath": "_layout/users/$userId/albums/$albumId/photos/$photoId/index.tsx",
       "parent": "/_layout"
     }
   }
