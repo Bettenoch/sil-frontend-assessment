@@ -11,9 +11,11 @@ import {
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import { getAlbumDetail } from ".."
+import userAuth from "../../../../../../../../auth/user_auth"
 import { getUserById } from "../../.."
 import { AllAlbumPhotosService } from "../../../../../../../../client"
 import { formatDate } from "../../../../../../../../utils"
+import EditPhoto from '../../../../../../../../components/photos/EditPhoto'
 
 export const Route = createFileRoute(
 	"/_layout/users/$userId/albums/$albumId/photos/$photoId/",
@@ -54,9 +56,13 @@ function PhotoPage() {
 		getPhoto({ userId, albumId, photoId }),
 	)
 
-	const { data: user } = useQuery(getUserById({ userId }))
+	const { data: owner } = useQuery(getUserById({ userId }))
 	const { data: album } = useQuery(getAlbumDetail({ albumId }))
-	return (
+
+	const {user} = userAuth()
+
+	const canManagePhoto = user?.is_superuser || album?.owner_id === user?.id
+	return 	(
 		<Container maxW={"full"}>
 			<Flex w="100%" direction={"column"} mt={24} gap={8}>
 				<Flex
@@ -78,7 +84,7 @@ function PhotoPage() {
 					</Box>
 					<VStack alignSelf={"center"}>
 						<Image
-							src={user?.avatar || "empty"}
+							src={owner?.avatar || "empty"}
 							alt="user-profile"
 							w={24}
 							h={24}
@@ -86,13 +92,20 @@ function PhotoPage() {
 						/>
 						<Box>
 							<Text fontSize={"2xl"} fontWeight={"light"}>
-								{user?.username}
+								{owner?.username}
 							</Text>
 						</Box>
 					</VStack>
 				</Flex>
 
-				<Flex w="full" direction={"column"} mb={16}>
+				<Flex w="full" direction={"column"} gap={4} mb={16}>
+					<Box>
+						{
+							photo && canManagePhoto &&(
+								<EditPhoto userId={userId} albumId={albumId} photoId={photoId} photo={photo}/>
+							)
+						}
+					</Box>
 					{isLoading ? (
 						<Grid p={6} w="full">
 							<GridItem>
