@@ -1,10 +1,10 @@
 import { Box, ListItem, ListRoot, Text } from "@chakra-ui/react"
 import { Link } from "@tanstack/react-router"
-import { LuAlbum, LuCamera, LuDatabase, LuHome } from "react-icons/lu"
+import { LuAlbum, LuBookHeadphones, LuCamera, LuDatabase } from "react-icons/lu"
 import { useColorModeValue } from "../ui/color-mode"
 
 const navlist = [
-	{ icon: LuHome, title: "Home", path: "/" },
+	{ icon: LuBookHeadphones, title: "Home", path: "/" },
 	{ icon: LuDatabase, title: "Dashboard", path: "/users" },
 	{ icon: LuAlbum, title: "Albums", path: "/albums" },
 	{ icon: LuCamera, title: "Photos", path: "/photos" },
