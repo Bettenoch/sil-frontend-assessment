@@ -141,6 +141,7 @@ const AddPhoto = () => {
 											borderWidth="1px"
 											borderRadius="md"
 											cursor="pointer"
+											color="#6D597A"
 											bg={selectedAlbumId === album.id ? "blue.100" : "white"}
 											onClick={() => setSelectedAlbumId(album.id)}
 										>

@@ -1,5 +1,5 @@
 import { Box, Container, Input, Stack, Text, VStack } from "@chakra-ui/react"
-import { createFileRoute, redirect } from "@tanstack/react-router"
+import { Link, createFileRoute, redirect } from "@tanstack/react-router"
 import { type SubmitHandler, useForm } from "react-hook-form"
 import { CustomToast } from "../Toast/CustomToast"
 import userAuth, { isLoggedIn } from "../auth/user_auth"
@@ -86,6 +86,12 @@ function UserLogin() {
 						>
 							Login
 						</Button>
+						<Text mb={12}>
+							Already have an account?{" "}
+							<Link to={"/signup"} className="teal-200">
+								Log In
+							</Link>
+						</Text>
 					</Stack>
 				</form>
 				{error && (
