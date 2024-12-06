@@ -21,6 +21,7 @@ import {
 	BreadcrumbRoot,
 } from "../../../../../../../../components/ui/breadcrumb"
 import { formatDate } from "../../../../../../../../utils"
+import { useColorModeValue } from "../../../../../../../../components/ui/color-mode"
 
 export const Route = createFileRoute(
 	"/_layout/users/$userId/albums/$albumId/photos/$photoId/",
@@ -170,6 +171,7 @@ function PhotoPage() {
 											fontSize={"2xl"}
 											fontWeight={"semibold"}
 											position={"relative"}
+											color={useColorModeValue("#DAEAF7", "#DAEAF7")}
 										>
 											{photo?.photo_title}
 										</Text>
