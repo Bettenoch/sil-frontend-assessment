@@ -13,12 +13,12 @@ import {
 	Text,
 } from "@chakra-ui/react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Link, createFileRoute, useNavigate } from "@tanstack/react-router"
+import { Link, createFileRoute, redirect, useNavigate } from "@tanstack/react-router"
 import { motion } from "framer-motion"
 import { useEffect } from "react"
 import { LuMemoryStick } from "react-icons/lu"
 import { z } from "zod"
-import userAuth from "../../../auth/user_auth"
+import userAuth, { isLoggedIn } from "../../../auth/user_auth"
 import { AlbumsService, UsersService } from "../../../client"
 import AddAlbum from "../../../components/albums/AddAlbum"
 import {
@@ -39,6 +39,13 @@ const albumSearchSchema = z.object({
 export const Route = createFileRoute("/_layout/albums/")({
 	component: AlbumsHome,
 	validateSearch: (search) => albumSearchSchema.parse(search),
+	beforeLoad: async () => {
+		if (!isLoggedIn()) {
+		  throw redirect({
+			to: "/login",
+		  })
+		}
+	  },
 })
 
 const total_albums_per_page = 20
