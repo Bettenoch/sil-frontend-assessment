@@ -24,9 +24,9 @@ import {
 	BreadcrumbLink,
 	BreadcrumbRoot,
 } from "../../../../../../../components/ui/breadcrumb"
+import { useColorModeValue } from "../../../../../../../components/ui/color-mode"
 import { formatDate } from "../../../../../../../utils"
 import { Route as PhotoDetail } from "./$photoId/index"
-import { useColorModeValue } from "../../../../../../../components/ui/color-mode"
 
 const albumPhotosSchema = z.object({
 	page: z.number().catch(1),
@@ -234,7 +234,11 @@ function AlbumPhotos() {
 												alignItems={"center"}
 												justifyContent={"center"}
 											>
-												<Text fontSize={"2xl"} color={useColorModeValue("#DAEAF7", "#DAEAF7")} fontWeight={"semibold"}>
+												<Text
+													fontSize={"2xl"}
+													color={useColorModeValue("#DAEAF7", "#DAEAF7")}
+													fontWeight={"semibold"}
+												>
 													{photo.photo_title}
 												</Text>
 											</Box>

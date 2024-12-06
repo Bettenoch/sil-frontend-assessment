@@ -13,13 +13,14 @@ import {
 	Text,
 } from "@chakra-ui/react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import AddAlbum from "../../../components/albums/AddAlbum"
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router"
 import { motion } from "framer-motion"
 import { useEffect } from "react"
 import { LuMemoryStick } from "react-icons/lu"
 import { z } from "zod"
+import userAuth from "../../../auth/user_auth"
 import { AlbumsService, UsersService } from "../../../client"
+import AddAlbum from "../../../components/albums/AddAlbum"
 import {
 	slideUpVariant,
 	slideUpVariantWithDelay,
@@ -30,7 +31,6 @@ import {
 	useColorModeValue,
 } from "../../../components/ui/color-mode"
 import { formatDate } from "../../../utils"
-import userAuth from "../../../auth/user_auth"
 
 const albumSearchSchema = z.object({
 	page: z.number().catch(1),
@@ -69,7 +69,7 @@ function AlbumsPage() {
 	const navigate = useNavigate({ from: Route.fullPath })
 	const { page } = Route.useSearch()
 	const { colorMode } = useColorMode()
-	
+
 	const textColor = useColorModeValue("ui.secondary", "ui.primary")
 	const queryClient = useQueryClient()
 
@@ -266,7 +266,7 @@ function AlbumsPage() {
 }
 
 function AlbumsHome() {
-	const {user} = userAuth()
+	const { user } = userAuth()
 	const userId = user?.id || "null"
 	const linearBg0 = useColorModeValue(
 		"linear(to-r, #D3AF85, #8E5915)",
@@ -314,9 +314,9 @@ function AlbumsHome() {
 							variants={slideUpVariant}
 						>
 							<Box fontSize={{ base: "2xl", sm: "3xl", md: "4xl" }}>
-							  A Gallery of {" "}
+								A Gallery of{" "}
 								<Box as="span" bgGradient={linearBg0} fontWeight="extrabold">
-								Timeless & memorable
+									Timeless & memorable
 								</Box>{" "}
 								Moments{" "}
 								<Box as="span" fontWeight="extrabold">
@@ -330,9 +330,9 @@ function AlbumsHome() {
 							variants={slideUpVariantWithDelay}
 						>
 							<Text fontSize={"xl"} mt={4}>
-							&quot;Your Memories, Beautifully Captured&quot;
-							Showcase your albums, a collection of moments frozen in time.
-							 Relive the joy, laughter, and love through stunning visuals.
+								&quot;Your Memories, Beautifully Captured&quot; Showcase your
+								albums, a collection of moments frozen in time. Relive the joy,
+								laughter, and love through stunning visuals.
 							</Text>
 						</motion.div>
 					</Box>
@@ -435,7 +435,7 @@ function AlbumsHome() {
 						justifyContent={"flex-end"}
 						mr={12}
 					>
-						<AddAlbum userId= {userId}/>
+						<AddAlbum userId={userId} />
 					</Box>
 					<AlbumsPage />
 				</Box>

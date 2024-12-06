@@ -11,9 +11,8 @@ const navlist = [
 ]
 
 interface SideBarProps {
-	onLinkClick: () => void;
-  }
-  
+	onLinkClick: () => void
+}
 
 const SideBar = ({ onLinkClick }: SideBarProps) => {
 	const bgActive = useColorModeValue("#B2FFFF", "#0093AF")
@@ -31,8 +30,8 @@ const SideBar = ({ onLinkClick }: SideBarProps) => {
 			<Link
 				to={path}
 				onClick={() => {
-					onLinkClick();
-				  }}
+					onLinkClick()
+				}}
 				activeProps={{
 					style: {
 						color: bgActive,
@@ -68,4 +67,4 @@ const SideBar = ({ onLinkClick }: SideBarProps) => {
 	)
 }
 
-export default SideBar;
+export default SideBar

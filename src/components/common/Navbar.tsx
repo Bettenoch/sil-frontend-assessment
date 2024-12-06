@@ -2,7 +2,6 @@ import { Box, Button, Flex, IconButton, Image, Text } from "@chakra-ui/react"
 import { Link } from "@tanstack/react-router"
 import { useState } from "react"
 import { LuMenu } from "react-icons/lu"
-import SideBar from "./SideBar"
 import userAuth, { isLoggedIn } from "../../auth/user_auth"
 import {
 	ColorModeButton,
@@ -27,6 +26,7 @@ import {
 	MenuTrigger,
 } from "../../components/ui/menu"
 import NavItems from "./NavItems"
+import SideBar from "./SideBar"
 
 const Navbar = () => {
 	const [open, setOpen] = useState(false)
@@ -37,9 +37,9 @@ const Navbar = () => {
 	const textColor = useColorModeValue("#FFFFFF", "#181C14")
 
 	const handleLinkClick = () => {
-		setOpen(false); // Close the sidebar drawer
-	  };
-	
+		setOpen(false) // Close the sidebar drawer
+	}
+
 	return (
 		<Flex as="nav" direction="column">
 			{/* Mobile View*/}
@@ -82,7 +82,7 @@ const Navbar = () => {
 								<DrawerTitle>Drawer Title</DrawerTitle>
 							</DrawerHeader>
 							<DrawerBody>
-							< SideBar onLinkClick={handleLinkClick} />
+								<SideBar onLinkClick={handleLinkClick} />
 							</DrawerBody>
 							<DrawerFooter display={"flex"} flexDirection={"column"}>
 								{user?.avatar ? (
