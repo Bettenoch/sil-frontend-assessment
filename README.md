@@ -9,12 +9,11 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/aimeos/aimeos-typo3/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/aimeos/aimeos-typo3/?branch=master)
 [![License](https://poser.pugx.org/aimeos/aimeos-typo3/license.svg)](https://packagist.org/packages/aimeos/aimeos-typo3)
 
-:star: Star us on GitHub — it motivates us a lot!
+:star: Star me on GitHub — it motivates me a lot!
 
 [SIL STUDIO](https://aimeos.org/TYPO3) SIL Studio is a modern photo management application that allows users to create albums and add photos to those albums. Built with a robust backend powered by FastAPI and a sleek, high-performance frontend developed using React and Vite, SIL Studio provides an intuitive user experience for organizing and showcasing your memories.
 
-![sil-frontend](https://user-images.githubusercontent.com/8647429/212348410-55cbaa00-722a-4a30-8b57-da9e173e0675.jpg)
-
+[![HOME](public/images/app/sil07.png)](https://github.com/Bettenoch/sil-frontend-assessment)
 ## Table Of Content
 
 ## Technology Stack and Features
