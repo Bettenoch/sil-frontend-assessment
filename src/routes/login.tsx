@@ -89,7 +89,7 @@ function UserLogin() {
 						<Text mb={12}>
 							Already have an account?{" "}
 							<Link to={"/signup"} className="teal-200">
-								Log In
+								SignUp
 							</Link>
 						</Text>
 					</Stack>
