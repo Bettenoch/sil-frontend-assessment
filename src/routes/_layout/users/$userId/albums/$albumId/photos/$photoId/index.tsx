@@ -12,7 +12,15 @@ import { useQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import { getAlbumDetail } from ".."
 import { getUserById } from "../../.."
+import userAuth from "../../../../../../../../auth/user_auth"
 import { AllAlbumPhotosService } from "../../../../../../../../client"
+import EditPhoto from "../../../../../../../../components/photos/EditPhoto"
+import {
+	BreadcrumbCurrentLink,
+	BreadcrumbLink,
+	BreadcrumbRoot,
+} from "../../../../../../../../components/ui/breadcrumb"
+import { useColorModeValue } from "../../../../../../../../components/ui/color-mode"
 import { formatDate } from "../../../../../../../../utils"
 
 export const Route = createFileRoute(
@@ -54,11 +62,31 @@ function PhotoPage() {
 		getPhoto({ userId, albumId, photoId }),
 	)
 
-	const { data: user } = useQuery(getUserById({ userId }))
+	const { data: owner } = useQuery(getUserById({ userId }))
 	const { data: album } = useQuery(getAlbumDetail({ albumId }))
+
+	const { user } = userAuth()
+	const userTitle = user?.username || "user"
+	const albumTitle = album?.title || "album"
+	const photoTitle = photo?.photo_title || "photo_title"
+	const canManagePhoto = user?.is_superuser || album?.owner_id === user?.id
 	return (
 		<Container maxW={"full"}>
 			<Flex w="100%" direction={"column"} mt={24} gap={8}>
+				<Box>
+					<BreadcrumbRoot>
+						<BreadcrumbLink href="/users">Dashboard</BreadcrumbLink>
+						<BreadcrumbLink href={`/users/${userId}/albums?page=1`}>
+							{userTitle}
+						</BreadcrumbLink>
+						<BreadcrumbLink
+							href={`/users/${userId}/albums/${albumId}/photos?page=1`}
+						>
+							{albumTitle}
+						</BreadcrumbLink>
+						<BreadcrumbCurrentLink>{photoTitle}</BreadcrumbCurrentLink>
+					</BreadcrumbRoot>
+				</Box>
 				<Flex
 					w="full"
 					direction={{ base: "column-reverse", md: "row" }}
@@ -78,7 +106,7 @@ function PhotoPage() {
 					</Box>
 					<VStack alignSelf={"center"}>
 						<Image
-							src={user?.avatar || "empty"}
+							src={owner?.avatar || "empty"}
 							alt="user-profile"
 							w={24}
 							h={24}
@@ -86,13 +114,23 @@ function PhotoPage() {
 						/>
 						<Box>
 							<Text fontSize={"2xl"} fontWeight={"light"}>
-								{user?.username}
+								{owner?.username}
 							</Text>
 						</Box>
 					</VStack>
 				</Flex>
 
-				<Flex w="full" direction={"column"} mb={16}>
+				<Flex w="full" direction={"column"} gap={4} mb={16}>
+					<Box>
+						{photo && canManagePhoto && (
+							<EditPhoto
+								userId={userId}
+								albumId={albumId}
+								photoId={photoId}
+								photo={photo}
+							/>
+						)}
+					</Box>
 					{isLoading ? (
 						<Grid p={6} w="full">
 							<GridItem>
@@ -133,6 +171,7 @@ function PhotoPage() {
 											fontSize={"2xl"}
 											fontWeight={"semibold"}
 											position={"relative"}
+											color={useColorModeValue("#DAEAF7", "#DAEAF7")}
 										>
 											{photo?.photo_title}
 										</Text>

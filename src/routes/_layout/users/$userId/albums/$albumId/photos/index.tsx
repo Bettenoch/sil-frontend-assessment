@@ -19,6 +19,12 @@ import {
 	AllAlbumPhotosService,
 } from "../../../../../../../client"
 import { CustomFooter } from "../../../../../../../components/common/CustomFooter"
+import {
+	BreadcrumbCurrentLink,
+	BreadcrumbLink,
+	BreadcrumbRoot,
+} from "../../../../../../../components/ui/breadcrumb"
+import { useColorModeValue } from "../../../../../../../components/ui/color-mode"
 import { formatDate } from "../../../../../../../utils"
 import { Route as PhotoDetail } from "./$photoId/index"
 
@@ -101,6 +107,10 @@ function AlbumPhotos() {
 	}, [userId, albumId, page, queryClient, hasNextPage])
 
 	const { data: album } = useQuery(getAlbumDetail({ albumId }))
+
+	const userTitle = user?.username || "user"
+	const albumTitle = album?.title || "album"
+
 	return (
 		<Container maxW={"100%"}>
 			<Flex
@@ -114,6 +124,15 @@ function AlbumPhotos() {
 				alignItems={"center"}
 				justifyContent={"center"}
 			>
+				<Box>
+					<BreadcrumbRoot>
+						<BreadcrumbLink href="/users">Dashboard</BreadcrumbLink>
+						<BreadcrumbLink href={`/users/${userId}/albums?page=1`}>
+							{userTitle}
+						</BreadcrumbLink>
+						<BreadcrumbCurrentLink>{albumTitle}</BreadcrumbCurrentLink>
+					</BreadcrumbRoot>
+				</Box>
 				<Flex
 					w="full"
 					direction={{ base: "column-reverse", md: "row" }}
@@ -122,7 +141,7 @@ function AlbumPhotos() {
 				>
 					<Box className="albumInfo">
 						<Text className="" fontWeight={"bold"} fontSize={"3xl"}>
-							{album?.title}
+							{album?.title}({count})
 						</Text>
 						<VStack>
 							<Text fontSize={"md"}>Last Updated At:</Text>
@@ -215,7 +234,11 @@ function AlbumPhotos() {
 												alignItems={"center"}
 												justifyContent={"center"}
 											>
-												<Text fontSize={"2xl"} fontWeight={"semibold"}>
+												<Text
+													fontSize={"2xl"}
+													color={useColorModeValue("#DAEAF7", "#DAEAF7")}
+													fontWeight={"semibold"}
+												>
 													{photo.photo_title}
 												</Text>
 											</Box>

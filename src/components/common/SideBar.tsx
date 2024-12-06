@@ -10,7 +10,11 @@ const navlist = [
 	{ icon: LuCamera, title: "Photos", path: "/photos" },
 ]
 
-const NavItems = () => {
+interface SideBarProps {
+	onLinkClick: () => void
+}
+
+const SideBar = ({ onLinkClick }: SideBarProps) => {
 	const bgActive = useColorModeValue("#B2FFFF", "#0093AF")
 	const hoverBg = useColorModeValue("#9195A2", "#B2FFFF")
 	const textHover = useColorModeValue("#D9F5F0", "#042749")
@@ -25,6 +29,9 @@ const NavItems = () => {
 		>
 			<Link
 				to={path}
+				onClick={() => {
+					onLinkClick()
+				}}
 				activeProps={{
 					style: {
 						color: bgActive,
@@ -52,7 +59,7 @@ const NavItems = () => {
 			listStyle={"none"}
 			alignItems={"center"}
 			justifyContent={"center"}
-			gap={{ base: 2, md: 6 }}
+			gap={{ base: 0, md: 6 }}
 			flexDir={{ base: "column", md: "row" }}
 		>
 			{navItems}
@@ -60,4 +67,4 @@ const NavItems = () => {
 	)
 }
 
-export default NavItems
+export default SideBar

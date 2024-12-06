@@ -185,6 +185,13 @@ export type GetPhotoIdData = {
 
 export type GetPhotoIdResponse = (PhotoPublic);
 
+export type GetAllPhotosData = {
+    limit?: number;
+    skip?: number;
+};
+
+export type GetAllPhotosResponse = (PhotosPublic);
+
 export type HealthCheckResponse = (boolean);
 
 export type UserLoginAccessTokenData = {

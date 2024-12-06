@@ -15,9 +15,9 @@ import { useEffect } from "react"
 import { LuArrowBigLeft } from "react-icons/lu"
 import { z } from "zod"
 import { UserAlbumsService, UsersService } from "../../../../../client"
+import Breadcrumb from "../../../../../components/common/Breadcrumb"
 import { CustomFooter } from "../../../../../components/common/CustomFooter"
 import { Route as AlbumPhotos } from "./$albumId/photos/"
-
 const albumSearchSchema = z.object({
 	page: z.number().catch(1),
 })
@@ -31,7 +31,10 @@ export const Route = createFileRoute("/_layout/users/$userId/albums/")({
 })
 const total_albums_per_page = 20
 
-function getUserAlbums({ userId, page }: { userId: string; page: number }) {
+export function getUserAlbums({
+	userId,
+	page,
+}: { userId: string; page: number }) {
 	return {
 		queryFn: () =>
 			UserAlbumsService.getAllUserAlbums({
@@ -54,6 +57,7 @@ function UserAlbum() {
 	const { page } = Route.useSearch()
 	const queryClient = useQueryClient()
 
+	const breadcrumbItems = [{ label: "dasboard", href: "/users" }]
 	const setPage = (page: number) =>
 		navigate({
 			search: (prev: { [key: string]: string }) => ({ ...prev, page }),
@@ -91,6 +95,9 @@ function UserAlbum() {
 				flexDirection={"column"}
 				gap={12}
 			>
+				<Box w="full">
+					<Breadcrumb items={breadcrumbItems} />
+				</Box>
 				<Flex
 					w="full"
 					alignItems={"center"}

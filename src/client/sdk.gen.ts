@@ -18,6 +18,8 @@ import type {
   GetAllAlbumPhotosResponse,
   GetPhotoIdData,
   GetPhotoIdResponse,
+  GetAllPhotosData,
+  GetAllPhotosResponse,
   HealthCheckResponse,
   UserLoginAccessTokenData,
   UserLoginAccessTokenResponse,
@@ -237,6 +239,33 @@ export class AllAlbumPhotosService {
   }
 }
 
+export class AllPhotosService {
+  /**
+   * Get All Photos
+   * Get all photos for an album.
+   * @param data The data for the request.
+   * @param data.skip
+   * @param data.limit
+   * @returns PhotosPublic Successful Response
+   * @throws ApiError
+   */
+  public static getAllPhotos(
+    data: GetAllPhotosData = {}
+  ): CancelablePromise<GetAllPhotosResponse> {
+    return __request(OpenAPI, {
+      method: "GET",
+      url: "/sil/v1/all_photos/",
+      query: {
+        skip: data.skip,
+        limit: data.limit,
+      },
+      errors: {
+        422: "Validation Error",
+      },
+    });
+  }
+}
+
 export class HealthService {
   /**
    * Health Check
@@ -289,15 +318,7 @@ export class LoginService {
 }
 
 export class PhotosService {
-  /**
-   * Create Photo
-   * Create a new photo.
-   * @param data The data for the request.
-   * @param data.albumId
-   * @param data.requestBody
-   * @returns PhotoPublic Successful Response
-   * @throws ApiError
-   */
+ 
   public static createPhoto(
     data: CreatePhotoData
   ): CancelablePromise<CreatePhotoResponse> {

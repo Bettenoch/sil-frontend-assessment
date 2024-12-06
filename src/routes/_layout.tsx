@@ -1,6 +1,7 @@
 import { Flex } from "@chakra-ui/react"
 import { Outlet, createFileRoute } from "@tanstack/react-router"
 
+import Footer from "../components/common/Footer"
 import Navbar from "../components/common/Navbar"
 
 export const Route = createFileRoute("/_layout")({
@@ -13,6 +14,7 @@ function Layout() {
 			<Navbar />
 
 			<Outlet />
+			<Footer />
 		</Flex>
 	)
 }
