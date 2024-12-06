@@ -60,7 +60,7 @@ export const homeList = [
 
 function Home() {
 	const { data: photos, isLoading } = useQuery(getAllPhotos())
-	const {colorMode} = useColorMode()
+	const { colorMode } = useColorMode()
 
 	const photosGrid = Array.from({ length: 4 }, (_, i) =>
 		photos?.data.filter((_, index) => index % 4 === i),
@@ -74,7 +74,11 @@ function Home() {
 					textAlign={"center"}
 					alignItems={"center"}
 					justifyContent={"center"}
-					bgImage={colorMode == 'light'? "url(/images/home/lightBg.jpg)": "url(/images/home/darkBg.jpg)"}
+					bgImage={
+						colorMode === "light"
+							? "url(/images/home/lightBg.jpg)"
+							: "url(/images/home/darkBg.jpg)"
+					}
 					backgroundPosition={"center"}
 					backgroundSize={"cover"}
 					backgroundRepeat={"no-repeat"}

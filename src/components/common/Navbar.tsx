@@ -56,9 +56,9 @@ const Navbar = () => {
 			>
 				<Flex w="100% " justify={"space-between"} p={4}>
 					<Link to={"/"}>
-					<Text fontSize={"2xl"} fontWeight={"extrabold"}>
-						SIL STUDIO
-					</Text>
+						<Text fontSize={"2xl"} fontWeight={"extrabold"}>
+							SIL STUDIO
+						</Text>
 					</Link>
 					<ColorModeButton
 						color={textColor}
@@ -129,11 +129,11 @@ const Navbar = () => {
 			>
 				<Flex w="100%" p={4} justify={"space-between"}>
 					<Box>
-					<Link to={"/"}>
-					<Text fontSize={"2xl"} fontWeight={"extrabold"}>
-						SIL STUDIO
-					</Text>
-					</Link>
+						<Link to={"/"}>
+							<Text fontSize={"2xl"} fontWeight={"extrabold"}>
+								SIL STUDIO
+							</Text>
+						</Link>
 					</Box>
 					<NavItems />
 					<Box display={"flex"} alignItems={"center"} gap={4}>
