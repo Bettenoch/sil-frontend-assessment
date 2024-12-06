@@ -318,15 +318,7 @@ export class LoginService {
 }
 
 export class PhotosService {
-  /**
-   * Create Photo
-   * Create a new photo.
-   * @param data The data for the request.
-   * @param data.albumId
-   * @param data.requestBody
-   * @returns PhotoPublic Successful Response
-   * @throws ApiError
-   */
+ 
   public static createPhoto(
     data: CreatePhotoData
   ): CancelablePromise<CreatePhotoResponse> {
