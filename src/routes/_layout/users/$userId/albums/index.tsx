@@ -31,7 +31,7 @@ export const Route = createFileRoute("/_layout/users/$userId/albums/")({
 })
 const total_albums_per_page = 20
 
-function getUserAlbums({ userId, page }: { userId: string; page: number }) {
+export function getUserAlbums({ userId, page }: { userId: string; page: number }) {
 	return {
 		queryFn: () =>
 			UserAlbumsService.getAllUserAlbums({
