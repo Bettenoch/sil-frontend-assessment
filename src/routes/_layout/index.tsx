@@ -11,6 +11,7 @@ import {
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import { AllPhotosService } from "../../client"
+import { useColorMode } from "../../components/ui/color-mode"
 
 export const Route = createFileRoute("/_layout/")({
 	component: Home,
@@ -59,6 +60,7 @@ export const homeList = [
 
 function Home() {
 	const { data: photos, isLoading } = useQuery(getAllPhotos())
+	const {colorMode} = useColorMode()
 
 	const photosGrid = Array.from({ length: 4 }, (_, i) =>
 		photos?.data.filter((_, index) => index % 4 === i),
@@ -72,7 +74,7 @@ function Home() {
 					textAlign={"center"}
 					alignItems={"center"}
 					justifyContent={"center"}
-					bgImage={"url(/images/home/darkBg.jpg)"}
+					bgImage={colorMode == 'light'? "url(/images/home/lightBg.jpg)": "url(/images/home/darkBg.jpg)"}
 					backgroundPosition={"center"}
 					backgroundSize={"cover"}
 					backgroundRepeat={"no-repeat"}
