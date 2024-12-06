@@ -13,6 +13,7 @@ import {
 	Text,
 } from "@chakra-ui/react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
+import AddAlbum from "../../../components/albums/AddAlbum"
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router"
 import { motion } from "framer-motion"
 import { useEffect } from "react"
@@ -29,6 +30,7 @@ import {
 	useColorModeValue,
 } from "../../../components/ui/color-mode"
 import { formatDate } from "../../../utils"
+import userAuth from "../../../auth/user_auth"
 
 const albumSearchSchema = z.object({
 	page: z.number().catch(1),
@@ -67,6 +69,7 @@ function AlbumsPage() {
 	const navigate = useNavigate({ from: Route.fullPath })
 	const { page } = Route.useSearch()
 	const { colorMode } = useColorMode()
+	
 	const textColor = useColorModeValue("ui.secondary", "ui.primary")
 	const queryClient = useQueryClient()
 
@@ -263,6 +266,8 @@ function AlbumsPage() {
 }
 
 function AlbumsHome() {
+	const {user} = userAuth()
+	const userId = user?.id || "null"
 	const linearBg0 = useColorModeValue(
 		"linear(to-r, #D3AF85, #8E5915)",
 		"linear(to-r, #FED053, #423738)",
@@ -309,11 +314,11 @@ function AlbumsHome() {
 							variants={slideUpVariant}
 						>
 							<Box fontSize={{ base: "2xl", sm: "3xl", md: "4xl" }}>
-								Enjoy the Knowledge Craft{" "}
+							  A Gallery of {" "}
 								<Box as="span" bgGradient={linearBg0} fontWeight="extrabold">
-									Blog
+								Timeless & memorable
 								</Box>{" "}
-								of Magic{" "}
+								Moments{" "}
 								<Box as="span" fontWeight="extrabold">
 									<LuMemoryStick />
 								</Box>{" "}
@@ -325,12 +330,9 @@ function AlbumsHome() {
 							variants={slideUpVariantWithDelay}
 						>
 							<Text fontSize={"xl"} mt={4}>
-								Welcome to the KCraft Blog! This space is dedicated to all
-								things machine learning, artificial intelligence, and, of
-								course, the cutting-edge developments of KCraft. Whether you're
-								here to share insights, ask thought-provoking questions, or dive
-								deep into the latest trends, you&apos;ll find something to
-								inspire and challenge your curiosity
+							&quot;Your Memories, Beautifully Captured&quot;
+							Showcase your albums, a collection of moments frozen in time.
+							 Relive the joy, laughter, and love through stunning visuals.
 							</Text>
 						</motion.div>
 					</Box>
@@ -361,7 +363,7 @@ function AlbumsHome() {
 									borderBottomRightRadius={"3em"}
 								>
 									<Text p={2} color={"burlywood"} fontWeight={"bold"}>
-										Craft News
+										Artistic
 									</Text>
 								</Box>
 							</ListItem>
@@ -382,7 +384,7 @@ function AlbumsHome() {
 										color={useColorModeValue("red.300", "red.800")}
 										fontWeight={"bold"}
 									>
-										Model Selection
+										Stunning
 									</Text>
 								</Box>
 							</ListItem>
@@ -403,7 +405,7 @@ function AlbumsHome() {
 										color={useColorModeValue("blue.300", "purple")}
 										fontWeight={"bold"}
 									>
-										Fine Tuning
+										Timeless
 									</Text>
 								</Box>
 							</ListItem>
@@ -420,7 +422,7 @@ function AlbumsHome() {
 									borderBottomRightRadius={"3em"}
 								>
 									<Text p={2} color={"orange.500"} fontWeight={"bold"}>
-										Embeddings
+										Futuristic
 									</Text>
 								</Box>
 							</ListItem>
@@ -433,7 +435,7 @@ function AlbumsHome() {
 						justifyContent={"flex-end"}
 						mr={12}
 					>
-						Add Album
+						<AddAlbum userId= {userId}/>
 					</Box>
 					<AlbumsPage />
 				</Box>
