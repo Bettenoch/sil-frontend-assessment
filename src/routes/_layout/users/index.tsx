@@ -10,7 +10,12 @@ import {
 	Text,
 } from "@chakra-ui/react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Link, createFileRoute, redirect, useNavigate } from "@tanstack/react-router"
+import {
+	Link,
+	createFileRoute,
+	redirect,
+	useNavigate,
+} from "@tanstack/react-router"
 import { z } from "zod"
 import { Route as UserAlbums } from "./$userId/albums/index"
 
@@ -30,11 +35,11 @@ export const Route = createFileRoute("/_layout/users/")({
 	validateSearch: (search) => userSearchSchema.parse(search),
 	beforeLoad: async () => {
 		if (!isLoggedIn()) {
-		  throw redirect({
-			to: "/login",
-		  })
+			throw redirect({
+				to: "/login",
+			})
 		}
-	  },
+	},
 })
 
 // export function getUserAlbums(userIds: string[]) {

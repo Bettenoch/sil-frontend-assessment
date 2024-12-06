@@ -13,7 +13,12 @@ import {
 	Text,
 } from "@chakra-ui/react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Link, createFileRoute, redirect, useNavigate } from "@tanstack/react-router"
+import {
+	Link,
+	createFileRoute,
+	redirect,
+	useNavigate,
+} from "@tanstack/react-router"
 import { motion } from "framer-motion"
 import { useEffect } from "react"
 import { LuMemoryStick } from "react-icons/lu"
@@ -41,11 +46,11 @@ export const Route = createFileRoute("/_layout/albums/")({
 	validateSearch: (search) => albumSearchSchema.parse(search),
 	beforeLoad: async () => {
 		if (!isLoggedIn()) {
-		  throw redirect({
-			to: "/login",
-		  })
+			throw redirect({
+				to: "/login",
+			})
 		}
-	  },
+	},
 })
 
 const total_albums_per_page = 20
