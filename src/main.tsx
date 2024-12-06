@@ -9,7 +9,7 @@ import { routeTree } from "./routeTree.gen"
 import { OpenAPI } from "./client/index.ts"
 import { Provider } from "./components/ui/provider.tsx"
 
-OpenAPI.BASE = "http://localhost:8000"
+OpenAPI.BASE = "https://sil-backend-assessment-wwkj.onrender.com"
 OpenAPI.TOKEN = async () => {
 	return localStorage.getItem("access_token") || ""
 }
