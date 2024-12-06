@@ -10,13 +10,18 @@ import {
 	Text,
 } from "@chakra-ui/react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Link, createFileRoute, useNavigate } from "@tanstack/react-router"
+import {
+	Link,
+	createFileRoute,
+	redirect,
+	useNavigate,
+} from "@tanstack/react-router"
 import { z } from "zod"
 import { Route as UserAlbums } from "./$userId/albums/index"
 
 import { useEffect } from "react"
 import { LuHandHeart } from "react-icons/lu"
-import userAuth from "../../../auth/user_auth"
+import userAuth, { isLoggedIn } from "../../../auth/user_auth"
 import { UserAlbumsService, UsersService } from "../../../client"
 import { CustomFooter } from "../../../components/common/CustomFooter"
 import { useColorModeValue } from "../../../components/ui/color-mode"
@@ -28,6 +33,13 @@ const userSearchSchema = z.object({
 export const Route = createFileRoute("/_layout/users/")({
 	component: ActiveUsers,
 	validateSearch: (search) => userSearchSchema.parse(search),
+	beforeLoad: async () => {
+		if (!isLoggedIn()) {
+			throw redirect({
+				to: "/login",
+			})
+		}
+	},
 })
 
 // export function getUserAlbums(userIds: string[]) {

@@ -11,12 +11,18 @@ import {
 	Text,
 } from "@chakra-ui/react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Link, createFileRoute, useNavigate } from "@tanstack/react-router"
+import {
+	Link,
+	createFileRoute,
+	redirect,
+	useNavigate,
+} from "@tanstack/react-router"
 import { motion } from "framer-motion"
 import { useEffect } from "react"
 import { LuMemoryStick } from "react-icons/lu"
 import { z } from "zod"
 
+import { isLoggedIn } from "../../../auth/user_auth"
 import { AllPhotosService, UsersService } from "../../../client"
 import {
 	slideUpVariant,
@@ -36,6 +42,13 @@ const albumSearchSchema = z.object({
 export const Route = createFileRoute("/_layout/photos/")({
 	component: AlbumsHome,
 	validateSearch: (search) => albumSearchSchema.parse(search),
+	beforeLoad: async () => {
+		if (!isLoggedIn()) {
+			throw redirect({
+				to: "/login",
+			})
+		}
+	},
 })
 const PhotoTags = [
 	"nature",
