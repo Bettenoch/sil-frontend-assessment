@@ -133,9 +133,9 @@ const CreateAlbum = ({ userId }: { userId: string }) => {
 						<Button
 							type={"submit"}
 							loading={isSubmitting}
-							disabled={isSubmitting || !isDirty}
+							disabled={isSubmitting || !isDirty || mutation.isPending}
 						>
-							Create
+							{mutation.isPending ? "Please Wait..." : "Add Album"}
 						</Button>
 					</DialogFooter>
 					<DialogCloseTrigger />
