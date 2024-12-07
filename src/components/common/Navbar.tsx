@@ -1,6 +1,14 @@
-import { Box, Button, Flex, IconButton, Image, Text } from "@chakra-ui/react"
+import {
+	Box,
+	Button,
+	Flex,
+	IconButton,
+	Image,
+	Text,
+	useBreakpointValue,
+} from "@chakra-ui/react"
 import { Link } from "@tanstack/react-router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { LuMenu } from "react-icons/lu"
 import userAuth, { isLoggedIn } from "../../auth/user_auth"
 import {
@@ -37,8 +45,16 @@ const Navbar = () => {
 	const textColor = useColorModeValue("#FFFFFF", "#181C14")
 
 	const handleLinkClick = () => {
-		setOpen(false) // Close the sidebar drawer
+		setOpen(false)
 	}
+
+	const isDesktop = useBreakpointValue({ base: false, md: true })
+
+	useEffect(() => {
+		if (isDesktop && open) {
+			setOpen(false)
+		}
+	}, [isDesktop, open])
 
 	return (
 		<Flex as="nav" direction="column">
@@ -51,6 +67,7 @@ const Navbar = () => {
 				align={"center"}
 				zIndex={"50"}
 				w="100%"
+				px={4}
 				display={{ base: "flex", md: "none" }}
 				position={"fixed"}
 			>
@@ -80,13 +97,18 @@ const Navbar = () => {
 							</IconButton>
 						</DrawerTrigger>
 						<DrawerContent>
-							<DrawerHeader>
-								<DrawerTitle>Drawer Title</DrawerTitle>
+							<DrawerHeader
+								w={"full"}
+								display={"flex"}
+								textAlign={"center"}
+								justifyContent={"center"}
+							>
+								<DrawerTitle fontWeight={"extrabold"}>SIL STUDIO</DrawerTitle>
 							</DrawerHeader>
 							<DrawerBody>
 								<SideBar onLinkClick={handleLinkClick} />
 							</DrawerBody>
-							<DrawerFooter display={"flex"} flexDirection={"column"}>
+							<DrawerFooter mb={6} display={"flex"} flexDirection={"column"}>
 								{user?.avatar ? (
 									<Image
 										src={user.avatar}
