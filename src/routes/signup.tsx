@@ -1,4 +1,5 @@
 import {
+	Badge,
 	Box,
 	Container,
 	Flex,
@@ -11,10 +12,11 @@ import {
 	VStack,
 	useDisclosure,
 } from "@chakra-ui/react"
-import { Link, createFileRoute } from "@tanstack/react-router"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router"
+import { AxiosError } from "axios"
 import { type SubmitHandler, useForm } from "react-hook-form"
-import userAuth from "../auth/user_auth"
-import type { UserRegister } from "../client"
+import { type ApiError, type UserRegister, UsersService } from "../client"
 import { Button } from "../components/ui/button"
 import {
 	DialogActionTrigger,
@@ -29,6 +31,7 @@ import {
 } from "../components/ui/dialog"
 import { Field } from "../components/ui/field"
 import { PasswordInput } from "../components/ui/password-input"
+import { Toaster, toaster } from "../components/ui/toaster"
 import { confirmPasswordRules, emailPattern } from "../utils"
 
 export const Route = createFileRoute("/signup")({
@@ -53,14 +56,15 @@ interface CreateAccountProp extends UserRegister {
 }
 
 function SignUpPage() {
-	const { createAccount } = userAuth()
+	const navigate = useNavigate()
+	const queryClient = useQueryClient()
 	const { open, onOpen, onClose } = useDisclosure()
 	const {
 		register,
 		handleSubmit,
 		setValue,
 		getValues,
-		formState: { errors, isSubmitting },
+		formState: { errors, isSubmitting, isLoading, isDirty },
 	} = useForm<CreateAccountProp>({
 		mode: "onBlur",
 		criteriaMode: "all",
@@ -74,14 +78,44 @@ function SignUpPage() {
 		},
 	})
 
+	const mutation = useMutation({
+		mutationFn: (data: UserRegister) =>
+			UsersService.createAccount({ requestBody: data }),
+
+		onSuccess: () => {
+			navigate({ to: "/login" })
+
+			toaster.create({
+				title: "Account created successfully",
+				type: "success",
+			})
+		},
+		onError: (error: ApiError) => {
+			let errMessage = (error.body as any)?.detail
+
+			if (error instanceof AxiosError) {
+				errMessage = error.message
+			}
+
+			toaster.create({
+				title: `${errMessage}`,
+				type: "error",
+			})
+		},
+
+		onSettled: () => {
+			queryClient.invalidateQueries({ queryKey: ["users"] })
+		},
+	})
 	const onSubmit: SubmitHandler<CreateAccountProp> = (data) => {
-		createAccount.mutate(data)
+		mutation.mutate(data)
 	}
 
 	const handleAvatarSelect = (avatarUrl: string) => {
 		setValue("avatar", avatarUrl)
 		onClose()
 	}
+
 	return (
 		<>
 			<Container maxW={"100%"}>
@@ -97,10 +131,11 @@ function SignUpPage() {
 						<Text fontSize={"3xl"} fontWeight={"bold"} textAlign={"center"}>
 							CREATE ACCOUNT
 						</Text>
-
+						<Toaster />
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<Stack gap={4}>
 								<Field
+									required
 									label="Name"
 									errorText={errors.name?.message}
 									invalid={!!errors.name}
@@ -108,6 +143,7 @@ function SignUpPage() {
 									<Input
 										id="full name"
 										minLength={3}
+										borderColor={errors.name ? "red.100" : "green.200"}
 										type="text"
 										placeholder="Full Name"
 										required
@@ -115,9 +151,10 @@ function SignUpPage() {
 											required: "Please enter your full name",
 										})}
 									/>
-									{errors.name && <small>{errors.name.message}</small>}
 								</Field>
 								<Field
+									helperText="Choose a unique username"
+									required
 									label="Username"
 									errorText={errors.username?.message}
 									invalid={!!errors.name}
@@ -126,6 +163,11 @@ function SignUpPage() {
 										id="user_name"
 										minLength={3}
 										type="text"
+										borderColor={
+											errors.username && errors.email?.message
+												? "red.100"
+												: "green.200"
+										}
 										placeholder="Username"
 										required
 										{...register("username", {
@@ -134,13 +176,15 @@ function SignUpPage() {
 									/>
 								</Field>
 								<Field
+									required
 									label="Email"
 									id="email"
-									errorText={errors.username?.message}
+									errorText={errors.email?.message}
 									invalid={!!errors.email}
 								>
 									<Input
 										id="email"
+										borderColor={errors.email ? "red.100" : "green.200"}
 										placeholder="Email"
 										type="email"
 										required
@@ -151,6 +195,11 @@ function SignUpPage() {
 									/>
 								</Field>
 								<Field
+									optionalText={
+										<Badge size="xs" variant="surface">
+											Optional
+										</Badge>
+									}
 									label="Avatar"
 									errorText={errors.avatar?.message}
 									invalid={!!errors.avatar}
@@ -170,11 +219,13 @@ function SignUpPage() {
 									</Flex>
 								</Field>
 								<Field
+									required
 									label="Password"
 									errorText={errors.password?.message}
 									invalid={!!errors.password}
 								>
 									<PasswordInput
+										borderColor={errors.password ? "red.100" : "green.200"}
 										placeholder="Enter your password"
 										{...register("password", {
 											required: "Password is required",
@@ -182,6 +233,7 @@ function SignUpPage() {
 									/>
 								</Field>
 								<Field
+									required
 									id="confirm_password"
 									errorText={errors.confirm_password?.message}
 									invalid={!!errors.confirm_password}
@@ -189,6 +241,9 @@ function SignUpPage() {
 									<PasswordInput
 										id="confirm_password"
 										placeholder="Repeat Password"
+										borderColor={
+											errors.confirm_password ? "red.100" : "green.200"
+										}
 										required
 										{...register(
 											"confirm_password",
@@ -196,14 +251,19 @@ function SignUpPage() {
 										)}
 									/>
 								</Field>
-								<Button
-									type="submit"
-									colorScheme={"blue"}
-									width={"full"}
-									loading={isSubmitting}
-								>
-									Signup
-								</Button>
+								{isSubmitting && isLoading ? (
+									<Button>Loading...</Button>
+								) : (
+									<Button
+										type="submit"
+										colorScheme={"blue"}
+										width={"full"}
+										disabled={!isDirty || mutation.isPending}
+										loading={isSubmitting}
+									>
+										{mutation.isPending ? "Loading..." : "Sign Up"}
+									</Button>
+								)}
 								<Text mb={12}>
 									Already have an account?{" "}
 									<Link to={"/login"} className="teal-200">

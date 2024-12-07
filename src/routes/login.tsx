@@ -7,6 +7,7 @@ import type { Body_login_user_login_access_token as AccessToken } from "../clien
 import { Button } from "../components/ui/button"
 import { Field } from "../components/ui/field"
 import { PasswordInput } from "../components/ui/password-input"
+import { Toaster } from "../components/ui/toaster"
 
 export const Route = createFileRoute("/login")({
 	component: UserLogin,
@@ -25,7 +26,7 @@ function UserLogin() {
 	const {
 		handleSubmit,
 		register,
-		formState: { errors, isSubmitting },
+		formState: { errors, isSubmitting, isDirty },
 	} = useForm<AccessToken>({
 		mode: "onBlur",
 		criteriaMode: "all",
@@ -54,6 +55,7 @@ function UserLogin() {
 				<Text fontSize="2xl" fontWeight="bold" textAlign="center">
 					Login
 				</Text>
+				<Toaster />
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<Stack gap="4">
 						<Field
@@ -81,13 +83,14 @@ function UserLogin() {
 						<Button
 							type="submit"
 							colorScheme="blue"
+							disabled={!isDirty}
 							loading={isSubmitting}
 							width={"full"}
 						>
 							Login
 						</Button>
 						<Text mb={12}>
-							Already have an account?{" "}
+							Don't have an account?{" "}
 							<Link to={"/signup"} className="teal-200">
 								SignUp
 							</Link>

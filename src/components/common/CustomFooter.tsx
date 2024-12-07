@@ -16,7 +16,6 @@ export function CustomFooter({
 }: PaginationFooterProps) {
 	return (
 		<Flex
-			position={"absolute"}
 			bottom={0}
 			w="full"
 			gap={4}

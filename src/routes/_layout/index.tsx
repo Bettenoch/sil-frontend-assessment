@@ -10,7 +10,12 @@ import {
 } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
+import { motion } from "framer-motion"
 import { AllPhotosService } from "../../client"
+import {
+	slideUpVariant,
+	slideUpVariantWithDelay,
+} from "../../components/animations/variants"
 import { useColorMode } from "../../components/ui/color-mode"
 
 export const Route = createFileRoute("/_layout/")({
@@ -84,38 +89,57 @@ function Home() {
 					backgroundRepeat={"no-repeat"}
 				>
 					<Flex mt={24} p={6} w="full" direction={"column"}>
-						<Text
-							fontSize={{ base: "3xl", sm: "5xl", md: "7xl" }}
-							fontWeight={"extrabold"}
+						<motion.div
+							initial="hidden"
+							animate="visible"
+							variants={slideUpVariant}
 						>
-							Your next gen photo STUDIO{" "}
-						</Text>
-						<Text fontSize={"md"}>Hello 👋🏼</Text>
+							<Text
+								fontSize={{ base: "3xl", sm: "5xl", md: "7xl" }}
+								fontWeight={"extrabold"}
+							>
+								Your next gen photo STUDIO{" "}
+							</Text>
+						</motion.div>
+						<motion.div
+							initial="hidden"
+							animate="visible"
+							variants={slideUpVariantWithDelay}
+						>
+							<Text fontSize={"md"}>Hello 👋🏼</Text>
+						</motion.div>
 					</Flex>
 
-					<Box
-						p={6}
-						display={"flex"}
-						flexDirection={"column"}
-						w="full"
-						textAlign={"center"}
-						justifyContent={"center"}
-						alignItems={"center"}
+					<motion.div
+						className="flex w-full"
+						initial="hidden"
+						animate="visible"
+						variants={slideUpVariantWithDelay}
 					>
-						<Text fontSize={"2xl"} fontWeight={"light"}>
-							The internet&apos;s source for visuals. Powered by creators
-							everywhere.
-						</Text>
-						<Box maxW={"lg"} mt={12} fontSize={"sm"}>
-							<Text>
-								Our app offers a seamless way to create, organize, and share
-								beautiful photo albums. Whether it&apos;s a wedding, family
-								reunion, vacation, or any special event, we empower you to
-								transform your photos into stunning, professional-looking
-								albums.
+						<Box
+							p={6}
+							display={"flex"}
+							flexDirection={"column"}
+							w="full"
+							textAlign={"center"}
+							justifyContent={"center"}
+							alignItems={"center"}
+						>
+							<Text fontSize={"2xl"} fontWeight={"light"}>
+								The internet&apos;s source for visuals. Powered by creators
+								everywhere.
 							</Text>
+							<Box display={"flex"} maxW={"lg"} p={8} mt={12} fontSize={"sm"}>
+								<Text>
+									Our app offers a seamless way to create, organize, and share
+									beautiful photo albums. Whether it&apos;s a wedding, family
+									reunion, vacation, or any special event, we empower you to
+									transform your photos into stunning, professional-looking
+									albums.
+								</Text>
+							</Box>
 						</Box>
-					</Box>
+					</motion.div>
 				</VStack>
 				<Flex w="full" direction={"column"}>
 					<Grid
